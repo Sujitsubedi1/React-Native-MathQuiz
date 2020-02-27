@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import CountDown from 'react-native-countdown-component';
+import { Svg } from 'expo';
+
+
 
 
 export default class Main extends React.Component{
+
+    static navigationOptions= {
+        headerShown: false
+    }
 
 
     constructor(props){
@@ -16,7 +23,7 @@ export default class Main extends React.Component{
             firstnumber:'',
             secondnumber:'',
             calc: '',
-            operator: ['+', '-', '*', '/'],
+            operator: ['+', '-', 'X', '/'],
             selectedoperator:'',
             Stringed:'',
             Button1:'',
@@ -24,8 +31,8 @@ export default class Main extends React.Component{
             Button3: '',
             Button4:'',
             Score: 0,
-            Timer:10,
-            changeTimer:10
+            Timer:20,
+            changeTimer:20
         }
         
     }
@@ -57,7 +64,7 @@ export default class Main extends React.Component{
            else if(this.state.selectedoperator == '-' ){
                 this.state.calc = this.state.firstnumber - this.state.secondnumber;
         }
-            else if(this.state.selectedoperator == '*' ){
+            else if(this.state.selectedoperator == 'X' ){
             this.state.calc = this.state.firstnumber * this.state.secondnumber;
                  }
             else if(this.state.selectedoperator == '/' ){
@@ -102,6 +109,10 @@ export default class Main extends React.Component{
             this.state.changeTimer= this.state.changeTimer-1;
             
          
+        }
+
+        checkdigit(){
+
         }
 
         CustomizeButton(){
@@ -174,58 +185,110 @@ export default class Main extends React.Component{
            
         return(
           
-            <View>
+            <View style = {styles.container}>
 
-                <View>
-                <Text>
-              {this.state.firstnumber} 
-      
-                {this.state.selectedoperator}
-         
-              {this.state.secondnumber}
-              
-              </Text>
-            </View>
+                <View style ={styles.questionview}>
 
-            <View>
-                <Button
-                title= {this.state.Button1}
-                onPress = {()=>this.Answer(this.state.Button1)}
-                />
-                <Button
-                title= {this.state.Button2}
-                onPress = {()=>this.Answer(this.state.Button2)}
-                />
-                   
-                 <Button
-                title= {this.state.Button3}
-                onPress = {()=>this.Answer(this.state.Button3)}
-                />
-                      
-                 <Button
-                title= {this.state.Button4}
-                onPress = {()=>this.Answer(this.state.Button4)}
-                />
+                    {this.state.firstnumber/10 < 0.99 ? (
+                              <View style={styles.SquareShapeView}>
+                              <Text style = {styles.questiontext}> 0{this.state.firstnumber}</Text>
+                              </View>
+                    ):
+                    (
+                        <View style={styles.SquareShapeView}>
+                        <Text style = {styles.questiontext}> {this.state.firstnumber}</Text>
+                        </View>
+                    )}     
 
-            </View>
+       
+            {this.state.selectedoperator == '-' || this.state.selectedoperator == '/' ? (
+                    <View style={{ width: 30,  height: 50, backgroundColor: '#04BC4E'}}>
+                    <Text style = {{fontSize: 30,fontWeight: 'bold'}}> {this.state.selectedoperator}</Text>
+                    </View>
+                         ): (
+                  <View style={{ width: 50,  height: 50, backgroundColor: '#04BC4E'}}>
+                  <Text style = {{fontSize: 30,fontWeight: 'bold'}}> {this.state.selectedoperator}</Text>
+                  </View> 
+                  )}
+          
 
-            <View>
-                <Text>
+                     {this.state.secondnumber/10 < 0.99 ? (
+                              <View style={styles.SquareShapeView}>
+                              <Text style = {styles.questiontext}> 0{this.state.secondnumber}</Text>
+                              </View>
+                    ):
+                    (
+                        <View style={styles.SquareShapeView}>
+                        <Text style = {styles.questiontext}> {this.state.secondnumber}</Text>
+                        </View>
+                    )}    
+           
+                     <Text style={{padding:10, margin:60}}>
                    Score : {this.state.Score}
+                   </Text>
+
+                            </View>
+
+                           
+                            
+               
+                   <View>
                    <CountDown
                       until={this.state.Timer}
                       onFinish={() => this.GameOver()}
                     onChange ={() => this.recordtime()}
-                     size={50}
+                     size={20}
                      timeToShow={['S']}
                      timeLabels={{s: 'SS'}}
                          />
+                         </View>
+                      
+               
 
+            <View style= {{flex:1,  justifyContent:'center', alignItems:'center'}}>
+            <TouchableOpacity onPress = {() => {this.Answer(this.state.Button1)}}>
+                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
+                           justifyContent: 'center',  height:30, width:150}}
+                            >
+                                <Text style = {{color: 'white'}}>{this.state.Button1}</Text>
+                      </View>
+                     </TouchableOpacity>
 
+                     <View style={{flex:0.1}}/>
 
-                  
-                </Text>
-                </View>
+                     <TouchableOpacity onPress = {() => {this.Answer(this.state.Button2)}}>
+                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
+                           justifyContent: 'center',  height:30, width:150}}
+                            >
+                                <Text style = {{color: 'white'}}>{this.state.Button2}</Text>
+                      </View>
+                
+                     </TouchableOpacity>
+
+                     <View style={{flex:0.1}}/>
+
+                     <TouchableOpacity onPress = {() => {this.Answer(this.state.Button3)}}>
+                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
+                           justifyContent: 'center',  height:30, width:150}}
+                            >
+                                <Text style = {{color: 'white'}}>{this.state.Button3}</Text>
+                      </View>
+                     </TouchableOpacity>
+
+                 
+
+                     <View style={{flex:0.1}}/>
+                    <TouchableOpacity onPress = {() => {this.Answer(this.state.Button4)}}>
+                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
+                           justifyContent: 'center',  height:30, width:150}}
+                            >
+                                <Text style = {{color: 'white'}}>{this.state.Button4}</Text>
+                      </View>
+                     </TouchableOpacity>
+                      
+                         
+
+            </View>
 
        
        
@@ -233,3 +296,37 @@ export default class Main extends React.Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+ 
+    container: {
+   
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+    },
+
+    questionview:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+     
+     
+    },
+   
+    SquareShapeView: {
+      width: 50,
+      height: 50,
+      backgroundColor: '#04BC4E'
+    },
+
+
+    questiontext:{
+        fontSize: 30,
+        fontWeight: 'bold',
+    }
+   
+  
+   
+  });
