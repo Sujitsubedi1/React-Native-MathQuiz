@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground} from 'react-native';
 
 import CountDown from 'react-native-countdown-component';
-import { Svg } from 'expo';
+
+
 
 
 
@@ -68,9 +69,10 @@ export default class Main extends React.Component{
             this.state.calc = this.state.firstnumber * this.state.secondnumber;
                  }
             else if(this.state.selectedoperator == '/' ){
-             this.state.calc = this.state.firstnumber / this.state.secondnumber;
+             this.state.calc = (this.state.firstnumber / this.state.secondnumber).toFixed(2);
                 }
-         
+
+                console.log(this.state.calc)
                 this.state.Stringed= this.state.calc.toString();            
         }
 
@@ -185,148 +187,127 @@ export default class Main extends React.Component{
            
         return(
           
-            <View style = {styles.container}>
+            <ImageBackground source={require("../Images/BG.jpg")} style={{flex:1}}>
 
                 <View style ={styles.questionview}>
+                            <Text style = {{fontSize: 25}}>
+                            QUESTION 1</Text>
 
-                    {this.state.firstnumber/10 < 0.99 ? (
-                              <View style={styles.SquareShapeView}>
-                              <Text style = {styles.questiontext}> 0{this.state.firstnumber}</Text>
-                              </View>
-                    ):
-                    (
-                        <View style={styles.SquareShapeView}>
-                        <Text style = {styles.questiontext}> {this.state.firstnumber}</Text>
-                        </View>
-                    )}     
-
-       
-            {this.state.selectedoperator == '-' || this.state.selectedoperator == '/' ? (
-                    <View style={{ width: 30,  height: 50, backgroundColor: '#04BC4E'}}>
-                    <Text style = {{fontSize: 30,fontWeight: 'bold'}}> {this.state.selectedoperator}</Text>
-                    </View>
-                         ): (
-                  <View style={{ width: 50,  height: 50, backgroundColor: '#04BC4E'}}>
-                  <Text style = {{fontSize: 30,fontWeight: 'bold'}}> {this.state.selectedoperator}</Text>
-                  </View> 
-                  )}
-          
-
-                     {this.state.secondnumber/10 < 0.99 ? (
-                              <View style={styles.SquareShapeView}>
-                              <Text style = {styles.questiontext}> 0{this.state.secondnumber}</Text>
-                              </View>
-                    ):
-                    (
-                        <View style={styles.SquareShapeView}>
-                        <Text style = {styles.questiontext}> {this.state.secondnumber}</Text>
-                        </View>
-                    )}    
-           
-                     <Text style={{padding:10, margin:60}}>
+                      
+                     <Text style={{padding:10, margin:50, fontSize:25}}>
                    Score : {this.state.Score}
                    </Text>
 
-                            </View>
-
-                           
-                            
-               
-                   <View>
                    <CountDown
-                      until={this.state.Timer}
+                      until={800}
                       onFinish={() => this.GameOver()}
                     onChange ={() => this.recordtime()}
                      size={20}
                      timeToShow={['S']}
                      timeLabels={{s: 'SS'}}
                          />
-                         </View>
-                      
+                            </View>
+
+
+                          <View style ={{flex:0.2}}/>
+
+                          <View style = {styles.rectanglebox}>
+                                    <View style = {{flex:0.5}}/>
+                                <View style = {styles.QuestionView}>
+                              <Text style = {styles.questiontext}> {this.state.firstnumber}</Text>
+                              <Text style = {styles.questiontext}> {this.state.selectedoperator}</Text>
+                              <Text style = {styles.questiontext}> {this.state.secondnumber}</Text>
+                              <Text style= {styles.questiontext} > = ? </Text>
+                               </View>
+
+                          </View>
+
+                         
                
 
-            <View style= {{flex:1,  justifyContent:'center', alignItems:'center'}}>
+            <View style= {styles.OptionsView}>
             <TouchableOpacity onPress = {() => {this.Answer(this.state.Button1)}}>
-                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
-                           justifyContent: 'center',  height:30, width:150}}
-                            >
-                                <Text style = {{color: 'white'}}>{this.state.Button1}</Text>
-                      </View>
+                                <Text style = {{color: 'black', fontSize:30}}>{this.state.Button1}
+                                </Text>
+                     
                      </TouchableOpacity>
 
-                     <View style={{flex:0.1}}/>
+                    <View style ={{flex:0.2}}/>
 
                      <TouchableOpacity onPress = {() => {this.Answer(this.state.Button2)}}>
-                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
-                           justifyContent: 'center',  height:30, width:150}}
-                            >
-                                <Text style = {{color: 'white'}}>{this.state.Button2}</Text>
-                      </View>
-                
-                     </TouchableOpacity>
-
-                     <View style={{flex:0.1}}/>
-
-                     <TouchableOpacity onPress = {() => {this.Answer(this.state.Button3)}}>
-                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
-                           justifyContent: 'center',  height:30, width:150}}
-                            >
-                                <Text style = {{color: 'white'}}>{this.state.Button3}</Text>
-                      </View>
+                       
+                                <Text style = {{color: 'black', fontSize:30}}> {this.state.Button2}
+                                </Text>
+              
                      </TouchableOpacity>
 
                  
 
-                     <View style={{flex:0.1}}/>
-                    <TouchableOpacity onPress = {() => {this.Answer(this.state.Button4)}}>
-                        <View style = {{backgroundColor: 'red', alignItems: 'center', 
-                           justifyContent: 'center',  height:30, width:150}}
-                            >
-                                <Text style = {{color: 'white'}}>{this.state.Button4}</Text>
-                      </View>
+                     <View style={{flex:0.2}}/>
+
+                
+                     <TouchableOpacity onPress = {() => {this.Answer(this.state.Button3)}}>
+                       
+                                <Text style = {{color: 'black', fontSize:30}}>{this.state.Button3}
+                                </Text>
+                     
                      </TouchableOpacity>
+
+                 
+
+                     <View style={{flex:0.2}}/>
+                    <TouchableOpacity onPress = {() => {this.Answer(this.state.Button4)}}>
+                       
+                                <Text style = {{color: 'black', fontSize:30}}>{this.state.Button4}
+                                </Text>
+                     
+                     </TouchableOpacity>
+
+                     </View>
                       
-                         
 
-            </View>
-
-       
-       
-            </View>
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create({
  
-    container: {
    
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    },
 
     questionview:{
-        flex: 1,
+       
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems:'center'
      
      
     },
    
-    SquareShapeView: {
-      width: 50,
-      height: 50,
-      backgroundColor: '#04BC4E'
+ QuestionView:{
+        flexDirection:'row',
+        justifyContent:'center',
+        
     },
 
+    rectanglebox:{
+        width: '100%',
+        height: 200,
+        
+        borderWidth:3,
+        borderStyle: 'solid',
+        borderColor:'white'
+       
+        
+    },
 
     questiontext:{
-        fontSize: 30,
+        fontSize: 60,
         fontWeight: 'bold',
+    },
+    OptionsView:{
+        justifyContent:'center',
+        alignItems:'center',
+        flex:1
     }
-   
-  
-   
   });
